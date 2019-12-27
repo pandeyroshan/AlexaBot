@@ -3,6 +3,7 @@ import random
 import sys
 from time import sleep
 import os
+from start import start_converstaion
 
 
 def interactive_print(input_string):
@@ -47,15 +48,26 @@ def start_bot():
             login()
 
     def login():
-        interactive_print('Alexa: Welcome user, Kindly provide your credentials\nUsername:')
-        username = input('You: ')
-        interactive_print('Alexa: Passcode: ')
-        passcode = input('You: ')
-        # cur.execute('delete from user_credentials')
-        con.commit()
-        cur.execute('select * from user_credential')
-        result_set = cur.fetchall()
-        print(result_set)
+        login_flag = False
+        for i in range(0,3):
+            interactive_print('Alexa: Welcome user, Kindly provide your credentials\nUsername:')
+            username = input('You: ')
+            interactive_print('Alexa: Passcode: ')
+            passcode = input('You: ')
+            # cur.execute('delete from user_credentials')
+            con.commit()
+            cur.execute('select * from user_credential')
+            result_set = cur.fetchall()
+            for data in result_set:
+                if username in data:
+                    if passcode in data:
+                        start_converstaion()
+                        login_flag = True
+            if login_flag:
+                interactive_print('Alexa: Thanks for using Alexa')
+            else:
+                interactive_print('Alexa: Wrong credentials !!!')
+                interactive_print('Maximum Limit Exeeded !!!')
         pass
 
 
@@ -63,9 +75,9 @@ def start_bot():
         statement = 'Alexa: Hey ! Are you a registered user or a new user'
         interactive_print(statement)
         command = input('You: ')
-        if str(command).find('new') or str(command).find('first') or str(command).find('before'):
+        if 'new' in command.split(" "):
             new_user_setup()
-        elif str(command).find('old') or str(command).find('registered'):
+        elif 'old' in command.split(" ") or 'registered' in command.split(" "):
             login()
         else:
             statement = 'Sorry, I can\'t understand that'
