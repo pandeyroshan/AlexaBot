@@ -1,17 +1,9 @@
 import sqlite3
 import random
-import sys
-from time import sleep
 import os
 from start import start_converstaion
+from utils import interactive_print
 
-
-def interactive_print(input_string):
-    for char in input_string:
-        sleep(0)
-        sys.stdout.write(char)
-        sys.stdout.flush()
-    print()
 
 def setup_database():
     global con
@@ -61,10 +53,11 @@ def start_bot():
             for data in result_set:
                 if username in data:
                     if passcode in data:
-                        start_converstaion()
+                        start_converstaion(username)
                         login_flag = True
             if login_flag:
                 interactive_print('Alexa: Thanks for using Alexa')
+                exit()
             else:
                 interactive_print('Alexa: Wrong credentials !!!')
                 interactive_print('Maximum Limit Exeeded !!!')
