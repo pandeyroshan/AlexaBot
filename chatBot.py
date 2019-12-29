@@ -1,6 +1,7 @@
 import sqlite3
 import random
 import os
+from time import sleep
 from start import start_converstaion
 from utils import interactive_print
 

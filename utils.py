@@ -1,7 +1,12 @@
 from time import sleep
 import sys
+import requests
+import os
 
 
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def interactive_print(input_string):
     for char in input_string:
@@ -29,6 +34,8 @@ def delete_list():
     pass
 
 def tell_joke():
+    res = requests.get("https://geek-jokes.sameerkumar.website/api")
+    print(res.text)
     pass
 
 def ask_riddle():
